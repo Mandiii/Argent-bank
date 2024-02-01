@@ -1,26 +1,52 @@
+import { useEffect } from "react";
+
 function Login() {
+    function UserLogin()  {
+        useEffect(() => {
+            fetch('http://localhost:3001/api/v1/user/login', {
+                method: 'POST',
+                headers: {
+                  "accept": "application/json",
+                  "content-Type": "application/json"
+                  
+                },
+                body: JSON.stringify({
+                  "email": "tony@stark.com",
+                  "password": "password123"
+                })
+            })
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                console.log('effect ran')
+                console.log(data)
+            })
+        }, [])
+    }
+
     return (
-        <main class="main bg-dark">
-            <section class="sign-in-content">
-                <i class="fa fa-user-circle sign-in-icon"></i>
+        <main className="main bg-dark">
+            <section className="sign-in-content">
+                <i className="fa fa-user-circle sign-in-icon"></i>
                 <h1>Sign In</h1>
                 <form>
-                    <div class="input-wrapper">
-                        <label for="username">Username</label>
+                    <div className="input-wrapper">
+                        <label htmlFor="username">Username</label>
                         <input type="text" id="username" />
                     </div>
-                    <div class="input-wrapper">
-                        <label for="password">Password</label>
+                    <div className="input-wrapper">
+                        <label htmlFor="password">Password</label>
                         <input type="password" id="password" />
                     </div>
-                    <div class="input-remember">
+                    <div className="input-remember">
                         <input type="checkbox" id="remember-me" />
-                        <label for="remember-me">Remember me</label>
+                        <label htmlFor="remember-me">Remember me</label>
                     </div>
                     {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-                    <a href="./user.html" class="sign-in-button">Sign In</a>
+                    <a href="#" className="sign-in-button" onClick={UserLogin()}>Sign In</a>
                     {/* <!-- SHOULD BE THE BUTTON BELOW -->
-                    <!-- <button class="sign-in-button">Sign In</button> -->
+                    <!-- <button className="sign-in-button">Sign In</button> -->
                     <!--  --> */}
                 </form>
             </section>
