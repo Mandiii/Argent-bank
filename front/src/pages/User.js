@@ -1,10 +1,14 @@
 import BtnPrimary from "../components/BtnPrimary";
 import AccountBalance from "../components/AccountBalance";
+import { useSelector } from "react-redux";
 function User() {
+
+    const user = useSelector((state) => state.username.value)
     return (
+        // check token dans store
         <main className="main bg-dark">
             <div className="header">
-                <h1>Welcome back<br />Tony Jarvis!</h1>
+                <h1>Welcome back<br />{user.username}</h1>
                 <BtnPrimary
                     btnText="Edit Name"
                     btnclassName="edit-button"

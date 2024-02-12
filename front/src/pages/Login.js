@@ -1,28 +1,23 @@
-import { useEffect } from "react";
+import UserLogin from "../services/services";
+import { useSelector, useDispatch } from 'react-redux'
+import { updateToken } from "../state/user/userSlice";
+import { useNavigate } from "react-router";
 
 function Login() {
-    function UserLogin()  {
-        useEffect(() => {
-            fetch('http://localhost:3001/api/v1/user/login', {
-                method: 'POST',
-                headers: {
-                  "accept": "application/json",
-                  "content-Type": "application/json"
-                  
-                },
-                body: JSON.stringify({
-                  "email": "tony@stark.com",
-                  "password": "password123"
-                })
-            })
-            .then(res => {
-                return res.json()
-            })
-            .then(data => {
-                console.log('effect ran')
-                console.log(data)
-            })
-        }, [])
+    const dispatch = useDispatch()
+    async function getUserInfo() {
+        // e.preventDefault()
+        var username = document.getElementById("username").value
+        var password = document.getElementById("password").value
+        const userToken = await UserLogin(username, password)
+        console.log(userToken)
+
+        // verify if/else error usertoken success
+        dispatch(updateToken(userToken))
+        // localstrogage
+        // call api profile -> stock in store -> dispatch
+        // diriger vers page user router navigate
+        // const navigate = useNavigate
     }
 
     return (
@@ -30,7 +25,7 @@ function Login() {
             <section className="sign-in-content">
                 <i className="fa fa-user-circle sign-in-icon"></i>
                 <h1>Sign In</h1>
-                <form>
+                <form onSubmit={(event) => event.preventDefault() }>
                     <div className="input-wrapper">
                         <label htmlFor="username">Username</label>
                         <input type="text" id="username" />
@@ -43,11 +38,8 @@ function Login() {
                         <input type="checkbox" id="remember-me" />
                         <label htmlFor="remember-me">Remember me</label>
                     </div>
-                    {/* <!-- PLACEHOLDER DUE TO STATIC SITE --> */}
-                    <a href="#" className="sign-in-button" onClick={UserLogin()}>Sign In</a>
-                    {/* <!-- SHOULD BE THE BUTTON BELOW -->
-                    <!-- <button className="sign-in-button">Sign In</button> -->
-                    <!--  --> */}
+                    
+                    <button className="sign-in-button" onClick={() => getUserInfo()}>Sign In</button>
                 </form>
             </section>
         </main>
