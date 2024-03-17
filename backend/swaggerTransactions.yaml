@@ -1,0 +1,129 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API documentation
+  description: Contains all available API endpoints in this codebase
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  /user/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Transactions API
+      description: API to visualize all transactions grouped by accounts
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/transaction/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: User Transactions API
+      description: API to visualize all transactions details
+      parameters:
+        - name: transactionId
+          type: integer
+          in: path
+          description: id of selected transaction
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            $ref: '#/definitions/transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/transactions/{transactionId}:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - User Module
+      summary: Edit transaction information
+      description: API to update selected transaction information
+      parameters:
+        - name: transactionId
+          type: integer
+          in: path
+          description: id of selected transaction
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - in: body
+          name: body
+          description: edit transaction payload
+          required: true
+          schema: 
+            $ref: '#/definitions/transactionEdit'
+
+      responses:
+        '200':
+          description: User profile retrieved successully
+          schema:
+            type: array
+            items: 
+              $ref: '#/definitions/transactions'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  transactions:
+    type: object
+    properties:
+      transactionId:
+        type: integer
+      accountId:
+        type: integer
+      date:
+        type: string
+      description:
+        type: string
+      amount:
+        type: number
+      balance:
+        type:  number
+      transactionType:
+        type: string
+      category:
+        type: string
+      note:
+        type: string
+  transactionEdit:
+    type: object
+    properties:
+      category:
+        type: string
+      note:
+        type: string
+      
+      
