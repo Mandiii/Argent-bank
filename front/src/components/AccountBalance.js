@@ -1,4 +1,3 @@
-import BtnPrimary from "./BtnPrimary";
 function AccountBalance(props) {
     return (
         <section className="account">
@@ -8,10 +7,7 @@ function AccountBalance(props) {
                 <p className="account-amount-description">{props.amountDescription}</p>
             </div>
             <div className="account-content-wrapper cta">
-                <BtnPrimary
-                    btnText="View transactions"
-                    btnclassName="transaction-button"
-                />
+                <button className="transaction-button">View transaction</button>
             </div>
         </section>
     )

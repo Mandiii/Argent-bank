@@ -1,10 +1,9 @@
-const userLogin = async(username, password) => {    
+const UserLogin = async(username, password) => {    
     let result = await fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
         headers: {
             "accept": "application/json",
-            "content-Type": "application/json"
-            
+            "content-Type": "application/json"            
         },
         body: JSON.stringify({
             "email": username,
@@ -18,10 +17,9 @@ const userLogin = async(username, password) => {
         return data.body.token
     })
     .catch(error => {
-        console.log("error")
+        console.log(error)
+        return "error"
     })
-    console.log(result)
     return result
 }
-
-export default userLogin
+export default UserLogin

@@ -1,24 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialValue = {
+  token: "",
+  username: "",
+  firstName: "",
+  lastName: ""}
 const userSlice = createSlice({
   name: "userInfo",
-  initialState: { value: {
-    token: "",
-    username: "",
-    firstName: "",
-    lastName: ""
-    }      
-  },
+  initialState: { value: initialValue},
   reducers: {
     updateToken(state, action) {
-      state.token = action.payload
+      state.value.token = action.payload
     },
     updateUsername(state, action) {
-      state.username = action.payload
+      state.value.username = action.payload
+    },
+    updateFirstName(state, action) {
+      state.value.firstName = action.payload
+    },
+    updateLastName(state, action) {
+      state.value.lastName = action.payload
+    },
+    logout(state) {
+      state.value = initialValue
     }
-    // getUserInfos
   }
 })
 
-export const {updateToken, updateUsername} = userSlice.actions
+export const {updateToken, updateUsername, updateFirstName, updateLastName, logout} = userSlice.actions
 export default userSlice.reducer

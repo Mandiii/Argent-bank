@@ -100,7 +100,32 @@ body {
   font-size: 0.9rem;
 }
 
+.hide {
+  display: none !important;
+}
+#editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#editForm input {
+  padding: 5px;
+  border-radius: 5px;
+}
+#editForm .formButtons {
+  display: flex;
+  justify-content: space-between;
+}
+#editForm .formButtons button {
+  width: 48%;
+  border-radius: 5px;
+}
+
 @media (min-width: 920px) {
+  #editForm {
+    width: 35%;
+    margin: auto;
+  }
   .hero {
     height: 400px;
     background-position: 0% 33%;
@@ -251,7 +276,7 @@ body {
   flex: 1;
 }
 
-.edit-button {
+.edit-form-button {
   border-color: #00bc77;
   background-color: #00bc77;
   color: #fff;
