@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialValue = {
-  token: "",
+  token: localStorage.getItem("token") || "",
   username: "",
   firstName: "",
   lastName: ""}
@@ -22,7 +22,8 @@ const userSlice = createSlice({
       state.value.lastName = action.payload
     },
     logout(state) {
-      state.value = initialValue
+      localStorage.removeItem("token");
+      state.value = { ...initialValue, token: "" };
     }
   }
 })

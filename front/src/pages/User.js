@@ -1,49 +1,47 @@
 import AccountBalance from "../components/AccountBalance";
 import Login from "../pages/Login"
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {  updateUsername } from "../state/user/userSlice";
 import userProfileUpdate from "../services/userProfileUpdate"
 
 function User() {
 
+    
     const userInfo = useSelector((state) => state.userInfo.value)
     const token = userInfo.token
+    const username = userInfo.username
+    
     const dispatch = useDispatch()
-    console.log(userInfo)
+    const [newUsername, setNewUsername] = useState(username)
 
-    function toggleEditForm() {
-        const form = document.getElementById("editForm")
-        const editBtn = document.getElementById("editBtn")
-        form.classList.toggle("hide")
-        editBtn.classList.toggle("hide")
-
-    }
+    const [showEditForm, setShowEditForm] = useState(false)
 
     async function changeUsername() {
-        const newUsername = document.getElementById("username").value
-        console.log(newUsername)
-        const usernameUpdate = await userProfileUpdate(userInfo.token, newUsername)
-        if(usernameUpdate === "error") {
-            alert("An error occurred")
-        } else {
+        try {
+          await userProfileUpdate(token, newUsername)
+          
             dispatch(updateUsername(newUsername))
-            toggleEditForm()
+            setShowEditForm(!showEditForm)
+          
+        } catch (error) {
+          alert(error.message);
         }
+      }
 
-    }
     if(!token) {
         return <Login/>}
     return (
         <main className="main bg-dark">
             <div className="header">
                 <h1>Welcome back<br />{userInfo.username}</h1>
-                <button id="editBtn" className="edit-form-button" onClick={() => toggleEditForm()}>Edit Name</button>
+                {!showEditForm && <button id="editBtn" className="edit-form-button" onClick={() => setShowEditForm(!showEditForm)}>Edit Name</button>}
 
-                <form id="editForm"className="editForm hide">
+                {showEditForm && <form id="editForm"className="editForm">
                     <h2>Edit user info</h2>
                     <div>
                         <label htmlFor="username">User name : </label>
-                        <input type="text" id="username" defaultValue={userInfo.username} />
+                        <input type="text" id="username" value={newUsername} onChange={(event) => setNewUsername(event.target.value)} />
                     </div>                    
                     <div>
                         <label htmlFor="firstname">First name : </label>
@@ -59,11 +57,11 @@ function User() {
                             changeUsername()}} className="edit-form-button">Save</button>
                         <button onClick={(e) => {
                             e.preventDefault()
-                             toggleEditForm()}} className="edit-form-button">Cancel</button>
+                            setShowEditForm(!setShowEditForm)}} className="edit-form-button">Cancel</button>
                     </div>
 
                     
-                </form>
+                </form>}
             </div>
             <h2 className="sr-only">Accounts</h2>
             <AccountBalance
