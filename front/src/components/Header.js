@@ -22,8 +22,11 @@ function Header() {
         <h1 className="sr-only">Argent Bank</h1>
         
       </Link>
-        <div>
-          {token? <Link onClick={() =>signout()} className='main-nav-item' to="/">Sign out</Link> : <Link className='main-nav-item' to="/login"><i className="fa fa-user-circle"></i>Sign In</Link>}
+      <div className='navlinks'>
+        {token && <Link className='main-nav-item' to="/user">Transactions</Link>}
+          <div>
+            {token? <Link onClick={() =>signout()} className='main-nav-item' to="/"><i className="fa fa-user-circle"></i> Sign out</Link> : <Link className='main-nav-item' to="/login"><i className="fa fa-user-circle"></i> Sign In</Link>}
+          </div>
         </div>
     </nav>
   );
