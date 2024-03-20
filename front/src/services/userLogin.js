@@ -1,25 +1,25 @@
-const UserLogin = async(username, password) => {    
-    let result = await fetch('http://localhost:3001/api/v1/user/login', {
+const userLogin = async(username, password) => {
+
+    let response = await fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
         headers: {
             "accept": "application/json",
-            "content-Type": "application/json"            
+            "content-Type": "application/json"
         },
         body: JSON.stringify({
             "email": username,
             "password": password
         })
-    })
-    .then(res => {
-        return res.json()
-    })
-    .then(data => {
-        return data.body.token
-    })
-    .catch(error => {
-        console.log(error)
-        return "error"
-    })
-    return result
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        return data.body.token;
+    } else if (response.status === 400) {
+        const error = await response.json();
+        throw new Error(error.message);
+    } else {
+        throw new Error("An unidentified error occurred. Please, check the connection to the server and try again.");
+    }
 }
-export default UserLogin
+export default userLogin;

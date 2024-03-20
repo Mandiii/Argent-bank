@@ -19,6 +19,7 @@ body {
 
 .bg-dark {
   background-color: #12002b;
+  padding: 5px 0;
 }
 
 .sr-only {
@@ -50,7 +51,11 @@ body {
 .main-nav a.router-link-exact-active {
   color: #42b983;
 }
+div.navlinks {
+  display: flex;
+  gap: 30px;
 
+}
 .main-nav-item {
   text-decoration: none;
   margin-right: 0.5rem;
@@ -111,6 +116,9 @@ body {
 #editForm input {
   padding: 5px;
   border-radius: 5px;
+}
+input:disabled {
+  color:#ffffff65
 }
 #editForm .formButtons {
   display: flex;
