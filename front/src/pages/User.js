@@ -2,8 +2,9 @@ import AccountBalance from "../components/AccountBalance";
 import Login from "../pages/Login"
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {  updateUsername } from "../state/user/userSlice";
+import {  updateUsername, updateFirstName, updateLastName } from "../state/user/userSlice";
 import userProfileUpdate from "../services/userProfileUpdate"
+import getUserInfo from "../services/getUserInfo";
 
 function User() {
 
@@ -27,10 +28,26 @@ function User() {
         } catch (error) {
           alert(error.message);
         }
-      }
+    }
+    async function reloadUserInfo() {
+        try {
+          const user = {};
+          user.info = await getUserInfo(token);
+  
+          dispatch(updateUsername(user.info.userName));
+          dispatch(updateFirstName(user.info.firstName));
+          dispatch(updateLastName(user.info.lastName));
+  
+        } catch (error) {
+          alert(error.message);
+        }
+    }
 
     if(!token) {
-        return <Login/>}
+        return <Login/>
+    } else {
+        console.log(token)        
+        reloadUserInfo(token)
     return (
         <main className="main bg-dark">
             <div className="header">
@@ -82,5 +99,5 @@ function User() {
         </main>
 
     )
-}
+}}
 export default User;
